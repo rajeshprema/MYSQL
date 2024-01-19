@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</titletc.
+    );
+    
+    -- Create the Skill table (for artist skills)
+    CREATE TABLE Skill (
+    SkillID INT AUTO_INCREMENT PRIMARY KEY,
+    SkillName VARCHAR(50) NOT NULL
+    );
+    
+    -- Create the ArtistSkill table (to represent artist skills)
+    CREATE TABLE ArtistSkill (
+    ArtistID INT,
+    SkillID INT,
+    PRIMARY KEY (ArtistID, SkillID),
+    FOREIGN KEY (ArtistID) REFERENCES Artist(ArtistID),
+    FOREIGN KEY (SkillID) REFERENCES Skill(SkillID)
+    );
+    
+    -- Create the Genre table
+    CREATE TABLE Genre (
+    GenreID INT AUTO_INCREMENT PRIMARY KEY,
+    GenreName VARCHAR(50) NOT NULL
+    );
+    
+    -- Create the Movie table
+    CREATE TABLE Movie (
+    MovieID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(100) NOT NULL,
+    ReleaseDate DATE,
+    -- Other movie attributes (e.g., description, director, duration, etc.)
+    );
+    
+    -- Create the MovieGenre table (to associate movies with genres)
+    CREATE TABLE MovieGenre (
+    MovieID INT,
+    GenreID INT,
+    PRIMARY KEY (MovieID, GenreID),
+    FOREIGN KEY (MovieID) REFERENCES Movie(MovieID),
+    FOREIGN KEY (GenreID) REFERENCES Genre(GenreID)
+    );
+    
+    -- Create the Media table (to store images and videos related to movies)
+    CREATE TABLE Media (
+    MediaID INT AUTO_INCREMENT PRIMARY KEY,
+    MovieID INT,
+    MediaType ENUM('Image', 'Video') NOT NULL,
+    MediaURL VARCHAR(255) NOT NULL,
+    -- Other media attributes (e.g., description, upload date, etc.)
+    );
+    
+    -- Create the Review table
+    CREATE TABLE Review (
+    ReviewID INT AUTO_INCREMENT PRIMARY KEY,
+    MovieID INT,
+    UserID INT,
+    Rating DECIMAL(3, 1) NOT NULL,
+    ReviewText TEXT,
+    ReviewDate DATE,
+    -- Other review attributes (e.g., helpful votes, spoiler alert, etc.)
+    );
+    
+    -- Create the ArtistMovieRole table (to associate artists with movies and their roles)
+    CREATE TABLE ArtistMovieRole (
+    ArtistID INT,
+    MovieID INT,
+    Role VARCHAR(50) NOT NULL,
+    PRIMARY KEY (ArtistID, MovieID, Role),
+    FOREIGN KEY (ArtistID) REFERENCES Artist(ArtistID),
+    FOREIGN KEY (MovieID) REFERENCES Movie(MovieID)
+    );
+    
+
+
+</body>
+</html>
